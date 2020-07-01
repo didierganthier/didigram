@@ -19,7 +19,43 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.lightBlueAccent, Colors.purpleAccent]
+          )
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text("DidiGram", style: TextStyle(fontSize: 82.0, color: Colors.white, fontFamily: "Signatra")),
+            GestureDetector(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: 270.0,
+                      height: 65.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/google_signin_button.png"),
+                          fit: BoxFit.cover
+                        )
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
 }
