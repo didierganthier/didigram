@@ -47,6 +47,10 @@ class LoginScreenState extends State<LoginScreen> {
                           fit: BoxFit.cover
                         )
                       ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(1.0),
+                      child: circularProgress(),
                     )
                   ],
                 ),
