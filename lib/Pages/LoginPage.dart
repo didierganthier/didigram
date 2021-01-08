@@ -17,16 +17,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
+
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  SharedPreferences preferences;
+
+  bool isLoggedIn = false;
+  bool isLoading = false;
+  FirebaseUser currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.lightBlueAccent, Colors.purpleAccent]
-          )
+          color: Colors.blue,
         ),
         alignment: Alignment.center,
         child: Column(
@@ -35,6 +40,7 @@ class LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Text("DidiGram", style: TextStyle(fontSize: 82.0, color: Colors.white, fontFamily: "Signatra")),
             GestureDetector(
+              onTap: controlSignIn,
               child: Center(
                 child: Column(
                   children: <Widget>[
@@ -50,7 +56,7 @@ class LoginScreenState extends State<LoginScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(1.0),
-                      child: circularProgress(),
+                      child: isLoading? circularProgress() : Container(),
                     )
                   ],
                 ),
@@ -62,4 +68,30 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
+
+  Future<Null> controlSignIn() async
+  {
+    this.setState(() {
+      isLoading = true;
+    });
+
+    GoogleSignInAccount googleuser = await googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication = await googleuser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(idToken: googleSignInAuthentication.idToken, accessToken: googleSignInAuthentication.accessToken);
+
+    FirebaseUser firebaseUser = (await firebaseAuth.signInWithCredential(credential)).user;
+
+    if(firebaseUser != null)
+    {
+
+    }
+    else
+    {
+      Fluttertoast.showToast(msg: "Try again, Sign in Failed");
+      this.setState(() {
+        isLoading = false;
+      });
+    }
+  }
 }
