@@ -110,7 +110,12 @@ class LoginScreenState extends State<LoginScreen> {
       }
       else
       {
-
+        //Write data to local
+        currentUser = firebaseUser;
+        await preferences.setString("id", documentSnapshots[0]["id"]);
+        await preferences.setString("nickname", documentSnapshots[0]["nickname"]);
+        await preferences.setString("photoUrl", documentSnapshots[0]["photoUrl"]);
+        await preferences.setString("aboutMe", documentSnapshots[0]["aboutMe"]);
       }
     }
     //Signin not success signin failed
