@@ -143,6 +143,7 @@ class LoginScreenState extends State<LoginScreen> {
       this.setState(() {
         isLoading = false;
       });
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(currentUserId: firebaseUser.uid,)));
     }
     //Signin not success signin failed
     else
