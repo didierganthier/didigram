@@ -71,6 +71,8 @@ class LoginScreenState extends State<LoginScreen> {
 
   Future<Null> controlSignIn() async
   {
+    preferences = await SharedPreferences.getInstance();
+
     this.setState(() {
       isLoading = true;
     });
@@ -99,6 +101,12 @@ class LoginScreenState extends State<LoginScreen> {
           "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
           "chattingWith": null,
         });
+
+        //Write data to local
+        currentUser = firebaseUser;
+        await preferences.setString("id", currentUser.uid);
+        await preferences.setString("nickname", currentUser.displayName);
+        await preferences.setString("photoUrl", currentUser.photoUrl);
       }
       else
       {
