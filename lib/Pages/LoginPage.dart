@@ -27,6 +27,28 @@ class LoginScreenState extends State<LoginScreen> {
   FirebaseUser currentUser;
 
   @override
+  void initState() {
+    super.initState();
+    isSignedIn();
+  }
+
+  isSignedIn() async {
+    this.setState(() {
+      isLoading = true;
+    });
+
+    preferences = await SharedPreferences.getInstance();
+
+    isLoggedIn = await googleSignIn.isSignedIn();
+    if(isLoggedIn){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen(currentUserId: preferences.getString("id"),)));
+    }
+    this.setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

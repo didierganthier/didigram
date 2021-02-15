@@ -13,6 +13,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 
 class HomeScreen extends StatefulWidget {
+
+  final String currentUserId;
+
+  const HomeScreen({Key key, @required this.currentUserId}) : super(key: key);
+
+
+
   @override
   State createState() => HomeScreenState();
 }
