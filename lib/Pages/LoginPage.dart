@@ -117,6 +117,10 @@ class LoginScreenState extends State<LoginScreen> {
         await preferences.setString("photoUrl", documentSnapshots[0]["photoUrl"]);
         await preferences.setString("aboutMe", documentSnapshots[0]["aboutMe"]);
       }
+      Fluttertoast.showToast(msg: "Welcome, Sign in Success");
+      this.setState(() {
+        isLoading = false;
+      });
     }
     //Signin not success signin failed
     else
