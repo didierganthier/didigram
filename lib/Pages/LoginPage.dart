@@ -84,8 +84,28 @@ class LoginScreenState extends State<LoginScreen> {
 
     if(firebaseUser != null)
     {
+      //Check if already signed up
+      final QuerySnapshot resultQuery = await Firestore.instance.collection("users").where("id", isEqualTo: firebaseUser.uid).getDocuments();
+      final List<DocumentSnapshot> documentSnapshots = resultQuery.documents;
 
+      //Save data to FireStore - if new user
+      if(documentSnapshots.length == 0)
+      {
+        Firestore.instance.collection("users").document(firebaseUser.uid).setData({
+          "nickname": firebaseUser.displayName,
+          "photoUrl": firebaseUser.photoUrl,
+          "id": firebaseUser.uid,
+          "aboutMe": "I am using DidiGram",
+          "createdAt": DateTime.now().millisecondsSinceEpoch.toString(),
+          "chattingWith": null,
+        });
+      }
+      else
+      {
+
+      }
     }
+    //Signin not success signin failed
     else
     {
       Fluttertoast.showToast(msg: "Try again, Sign in Failed");
